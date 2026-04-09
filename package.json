@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build": "expo build:web",
-    "build:web": "expo build:web --no-dev --minify",
+    "build:web": "expo build:web --no-dev --minify --output-dir web-build",
     "deploy": "vercel --prod"
   },
   "dependencies": {
