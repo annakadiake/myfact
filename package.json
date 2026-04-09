@@ -7,8 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build": "expo build:web",
-    "build:web": "expo build:web --no-dev --minify --output-dir web-build",
+    "build": "npx expo export",
+    "build:web": "npx expo export --platform web && if not exist web-build mkdir web-build && xcopy /E /I dist web-build",
     "deploy": "vercel --prod"
   },
   "dependencies": {
