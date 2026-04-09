@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build": "npx expo export",
-    "build:web": "npx expo export --platform web && if not exist web-build mkdir web-build && xcopy /E /I dist web-build",
+    "build:web": "npx expo export --platform web",
     "deploy": "vercel --prod"
   },
   "dependencies": {
