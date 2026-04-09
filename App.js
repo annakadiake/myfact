@@ -1,35 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Alert, Image } from 'react-native';
 import jsPDF from 'jspdf';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
-function HomeScreen({ navigation }) {
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.homeBody}>
-        <View style={styles.heroCard}>
-          <View style={styles.logoCircle}>
-            <Image source={require('./assets/myfact.png')} style={styles.logoImage} resizeMode="contain" />
+export default function App() {
+  const [currentView, setCurrentView] = useState('home');
+
+  const showInvoiceForm = () => {
+    setCurrentView('create');
+  };
+
+  const showHome = () => {
+    setCurrentView('home');
+  };
+
+  if (currentView === 'home') {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.homeBody}>
+          <View style={styles.heroCard}>
+            <View style={styles.logoCircle}>
+              <Image source={require('./assets/myfact.png')} style={styles.logoImage} resizeMode="contain" />
+            </View>
+            <Text style={styles.welcomeTitle}>Bienvenue!</Text>
+            
+            <TouchableOpacity 
+              style={styles.createButton}
+              onPress={showInvoiceForm}
+            >
+              <Text style={styles.createButtonText}>Créer une facture</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.welcomeTitle}>Bienvenue!</Text>
-          
-          <TouchableOpacity 
-          style={styles.createButton}
-          onPress={() => navigation.navigate('Create')}
-        >
-          <Text style={styles.createButtonText}>Créer une facture</Text>
-        </TouchableOpacity>
         </View>
-      </View>
-      <StatusBar style="auto" />
-    </SafeAreaView>
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <CreateInvoiceForm onBack={showHome} />
   );
 }
 
-function CreateInvoiceScreen({ navigation }) {
+function CreateInvoiceForm({ onBack }) {
   const [formData, setFormData] = useState({
     companyName: '',
     address: '',
@@ -318,6 +332,9 @@ function CreateInvoiceScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
+          <TouchableOpacity onPress={onBack} style={styles.backButton}>
+            <Text style={styles.backText}>×</Text>
+          </TouchableOpacity>
           <Text style={styles.title}>Nouvelle Facture</Text>
           <Text style={styles.subtitle}>Remplissez les informations</Text>
         </View>
@@ -507,30 +524,6 @@ function CreateInvoiceScreen({ navigation }) {
   );
 }
 
-const Tab = createBottomTabNavigator();
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveTintColor: '#000000',
-          tabBarInactiveTintColor: '#999999',
-          tabBarStyle: {
-            backgroundColor: '#fff',
-            borderTopWidth: 0.5,
-            borderTopColor: '#E5E5EA',
-          },
-          headerStyle: { backgroundColor: '#404040' },
-          headerTintColor: '#fff',
-        }}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil', tabBarLabel: 'Accueil' }} />
-        <Tab.Screen name="Create" component={CreateInvoiceScreen} options={{ title: 'Créer', tabBarLabel: 'Créer' }} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -599,6 +592,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#404040',
     padding: 20,
     paddingTop: 10,
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    right: 20,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 22,
