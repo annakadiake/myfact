@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Alert, Image } from 'react-native';
 import jsPDF from 'jspdf';
 import { useState } from 'react';
@@ -33,7 +32,6 @@ export default function App() {
             </TouchableOpacity>
           </View>
         </View>
-        <StatusBar style="auto" />
       </SafeAreaView>
     );
   }
@@ -519,7 +517,6 @@ function CreateInvoiceForm({ onBack }) {
 
         <View style={{ height: 30 }} />
       </ScrollView>
-      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
